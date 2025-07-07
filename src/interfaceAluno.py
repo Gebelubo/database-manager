@@ -6,7 +6,8 @@ from banco import (
     buscar_aluno_por_id,
     atualizar_aluno,
     remover_aluno,
-    buscar_alunos_por_substring
+    buscar_alunos_por_substring,
+    buscar_aluno_por_id
 )
 
 def iniciar_interface():
@@ -60,7 +61,7 @@ def iniciar_interface():
     def mostrar_alunos():
         lista.delete(0, tk.END)
         for aluno in listar_alunos():
-            lista.insert(tk.END, f"ID: {aluno[0]} - Nome: {aluno[1]} - Email: {aluno[2]}")
+            lista.insert(tk.END, f"ID: {aluno[0]} --- Nome: {aluno[1]} --- Email: {aluno[2]}")
 
     def adicionar_aluno():
         nome = entry_nome.get().strip()
@@ -140,7 +141,13 @@ def iniciar_interface():
             aluno = buscar_aluno_por_id(id_aluno)
             lista.delete(0, tk.END)
             if aluno:
-                lista.insert(tk.END, f"ID: {aluno[0]} - Nome: {aluno[1]} - Email: {aluno[2]}")
+                lista.insert(tk.END, f"ID Aluno: {aluno[0]}")
+                lista.insert(tk.END, f"Nome: {aluno[1]}")
+                lista.insert(tk.END, f"Email: {aluno[2]}")
+                lista.insert(tk.END, f"Telefone: {aluno[3] if aluno[3] else 'Não informado'}")
+                lista.insert(tk.END, f"Endereço: {aluno[4] if aluno[4] else 'Não informado'}")
+                lista.insert(tk.END, f"Status: {aluno[5] if aluno[5] else 'Não informado'}")
+                lista.insert(tk.END, f"Data Nascimento: {aluno[6] if aluno[6] else 'Não informado'}")
             else:
                 messagebox.showinfo("Resultado", "Aluno não encontrado.")
         except Exception as e:

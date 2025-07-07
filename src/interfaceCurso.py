@@ -58,7 +58,7 @@ def iniciar_interface_curso():
     def mostrar_cursos():
         lista.delete(0, tk.END)
         for curso in listar_cursos():
-            lista.insert(tk.END, f"ID: {curso[0]} - Nome: {curso[1]} - Descrição: {curso[2]} - Carga Horária: {curso[3]}")
+            lista.insert(tk.END, f"ID Curso: {curso[0]} --- Nome: {curso[1]}")
 
     def adicionar_curso():
         nome = entry_nome.get().strip()
@@ -122,7 +122,11 @@ def iniciar_interface_curso():
             curso = buscar_curso_por_id(id_curso)
             lista.delete(0, tk.END)
             if curso:
-                lista.insert(tk.END, f"ID: {curso[0]} - Nome: {curso[1]} - Descrição: {curso[2]} - Carga Horária: {curso[3]}")
+                lista.insert(tk.END, f"ID Curso: {curso[0]}")
+                lista.insert(tk.END, f"Nome: {curso[1]}")
+                lista.insert(tk.END, f"Carga horária: {curso[2] if curso[2] else 'N/A'}")
+                lista.insert(tk.END, f"Descrição: {curso[3] if curso[3] else 'N/A'}")
+                lista.insert(tk.END, f"Modalidade: {curso[4] if curso[4] else 'N/A'}")
             else:
                 messagebox.showinfo("Resultado", "Curso não encontrado.")
         except ValueError:

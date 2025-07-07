@@ -61,7 +61,7 @@ class BancoDados:
             print(f"Erro de integridade: {e}")
             return False
 
-    def buscar_aluno_por_id(self, id_aluno: int) -> Optional[Tuple]:
+    def buscar_aluno_por_id(self, id_aluno: int):
         with self._conectar() as conn:
             return conn.execute("SELECT * FROM Aluno WHERE id_aluno = ?", (id_aluno,)).fetchone()
 

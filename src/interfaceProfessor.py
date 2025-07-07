@@ -63,8 +63,7 @@ def iniciar_interface_professor():
             telefone = prof[3] if prof[3] else "Não informado"
             email = prof[4] if prof[4] else "Não informado"
             lista.insert(tk.END,
-                         f"ID: {prof[0]} | Nome: {prof[1]}\n"
-                         f"Área: {prof[2]} | Tel: {telefone} | Email: {email}")
+                         f"ID Professor: {prof[0]} --- Nome: {prof[1]} --- Área: {prof[2]}")
 
     def adicionar_professor():
         nome = entry_nome.get().strip()
@@ -138,11 +137,11 @@ def iniciar_interface_professor():
             if prof:
                 telefone = prof[3] if prof[3] else "Não informado"
                 email = prof[4] if prof[4] else "Não informado"
-                lista.insert(tk.END,
-                             f"ID: {prof[0]} | Nome: {prof[1]}\n"
-                             f"Área: {prof[2]}\n"
-                             f"Telefone: {telefone}\n"
-                             f"Email: {email}")
+                lista.insert(tk.END,f"ID: {prof[0]} | Nome: {prof[1]} - Área: {prof[2]}")
+                lista.insert(tk.END, f"Nome: {prof[1]}")
+                lista.insert(tk.END, f"Área: {prof[2]}")
+                lista.insert(tk.END, f"Telefone: {telefone}")
+                lista.insert(tk.END, f"Email: {email}")
             else:
                 messagebox.showinfo("Resultado", "Professor não encontrado.")
         except ValueError:

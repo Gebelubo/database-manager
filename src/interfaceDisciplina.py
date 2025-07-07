@@ -6,7 +6,7 @@ from banco import (
     buscar_disciplina_por_id,
     atualizar_disciplina,
     remover_disciplina,
-    listar_professores
+    buscar_professor_por_id
 )
 
 def iniciar_interface_disciplina():
@@ -53,8 +53,8 @@ def iniciar_interface_disciplina():
     def mostrar_disciplinas():
         lista.delete(0, tk.END)
         for disc in listar_disciplinas():
-            prof_id = disc[3] if disc[3] else "N/A"
-            lista.insert(tk.END, f"ID: {disc[0]} - Nome: {disc[1]} - Prof ID: {prof_id}")
+            prof_id = disc[5] if disc[5] else "N/A"
+            lista.insert(tk.END, f"ID: {disc[0]} --- Nome: {disc[1]} --- Prof ID: {prof_id}")
 
     def adicionar_disciplina():
         nome = entry_nome.get().strip()
@@ -131,8 +131,12 @@ def iniciar_interface_disciplina():
             disc = buscar_disciplina_por_id(id_disc)
             lista.delete(0, tk.END)
             if disc:
-                prof_id = disc[3] if disc[3] else "Nenhum"
-                lista.insert(tk.END, f"ID: {disc[0]} - Nome: {disc[1]}\nEmenta: {disc[2]}\nProfessor ID: {prof_id}")
+                lista.insert(tk.END, f"ID Disciplina: {disc[0]}")
+                lista.insert(tk.END, f"Nome: {disc[1]}")
+                lista.insert(tk.END, f"Código: {disc[2]}")
+                lista.insert(tk.END, f"Ementa: {disc[3] if disc[3] else 'N/A'}")
+                lista.insert(tk.END, f"Bibliografia: {disc[4] if disc[4] else 'N/A'}")
+                lista.insert(tk.END, f"Professor: {disc[5] if disc[5] else 'N/A'}")
             else:
                 messagebox.showinfo("Resultado", "Disciplina não encontrada.")
         except ValueError:

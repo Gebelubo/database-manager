@@ -20,18 +20,10 @@ def iniciar_interface_matricula():
     main_frame.pack(pady=10)
 
     # Campos de entrada
-    entry_id_aluno = tk.Entry(main_frame)
-    entry_id_disc = tk.Entry(main_frame)
     entry_semestre = tk.Entry(main_frame)
     entry_nota = tk.Entry(main_frame)
 
     # Layout dos campos
-    tk.Label(main_frame, text="ID Aluno").grid(row=0, column=0, sticky="e")  # obrigatório
-    entry_id_aluno.grid(row=0, column=1)
-
-    tk.Label(main_frame, text="ID Disciplina").grid(row=1, column=0, sticky="e")  # obrigatório
-    entry_id_disc.grid(row=1, column=1)
-
     tk.Label(main_frame, text="Semestre").grid(row=2, column=0, sticky="e")  # obrigatório
     entry_semestre.grid(row=2, column=1)
 
@@ -43,12 +35,26 @@ def iniciar_interface_matricula():
     lista = tk.Listbox(janela, width=90, height=15)
     lista.pack(pady=10)
 
+    # Labels e entries SEMPRE visíveis para ID Aluno e ID Disciplina
+    label_id_aluno = tk.Label(main_frame, text="ID Aluno")
+    entry_id_aluno = tk.Entry(main_frame)
+    label_id_aluno.grid(row=0, column=0, sticky="e")
+    entry_id_aluno.grid(row=0, column=1)
+
+    label_id_disc = tk.Label(main_frame, text="ID Disciplina")
+    entry_id_disc = tk.Entry(main_frame)
+    label_id_disc.grid(row=1, column=0, sticky="e")
+    entry_id_disc.grid(row=1, column=1)
+
+    # Não use ocultar_ids() ou mostrar_ids() para esses campos!
+    # Eles devem estar sempre visíveis para todas as operações.
+
     # Funções de operação
     def mostrar_matriculas():
         lista.delete(0, tk.END)
         for mat in listar_matriculas():
-            nota = mat[3] if mat[3] is not None else "N/A"
-            lista.insert(tk.END, f"Aluno: {mat[0]} | Disciplina: {mat[1]} | Semestre: {mat[2]} | Nota: {nota}")
+            nota = mat[4] if mat[4] is not None else "N/A"
+            lista.insert(tk.END, f"ID Matrícula: {mat[0]} --- Aluno: {mat[1]} --- Disciplina: {mat[2]} --- Semestre: {mat[3]} --- Nota: {nota} --- Status: {mat[5] if mat[5] else 'N/A'}")
 
     def adicionar_matricula():
         try:
@@ -122,8 +128,13 @@ def iniciar_interface_matricula():
             mat = buscar_matricula(id_aluno, id_disc)
             lista.delete(0, tk.END)
             if mat:
-                nota = mat[3] if mat[3] is not None else "N/A"
-                lista.insert(tk.END, f"Aluno: {mat[0]} | Disciplina: {mat[1]} | Semestre: {mat[2]} | Nota: {nota}")
+                nota = mat[4] if mat[4] is not None else "N/A"
+                lista.insert(tk.END, f"ID Matricula: {mat[0]}")
+                lista.insert(tk.END, f"Aluno: {mat[1]}")
+                lista.insert(tk.END, f"Disciplina: {mat[2]}")
+                lista.insert(tk.END, f"Semestre: {mat[3]}")
+                lista.insert(tk.END, f"Nota: {nota}")
+                lista.insert(tk.END, f"Status: {mat[5] if mat[5] else 'N/A'}")
             else:
                 messagebox.showinfo("Resultado", "Matrícula não encontrada.")
         except ValueError:
@@ -136,16 +147,16 @@ def iniciar_interface_matricula():
     frame_botoes.pack(pady=10)
 
     # Botões de ação
-    btn_adicionar = tk.Button(frame_botoes, text="Adicionar", width=12, command=lambda: [ocultar_ids(), adicionar_matricula()])
+    btn_adicionar = tk.Button(frame_botoes, text="Adicionar", width=12, command=adicionar_matricula)
     btn_adicionar.grid(row=0, column=0, padx=5)
 
-    btn_atualizar = tk.Button(frame_botoes, text="Atualizar", width=12, command=lambda: [mostrar_ids(), atualizar_matricula_gui()])
+    btn_atualizar = tk.Button(frame_botoes, text="Atualizar", width=12, command=atualizar_matricula_gui)
     btn_atualizar.grid(row=0, column=1, padx=5)
 
-    btn_remover = tk.Button(frame_botoes, text="Remover", width=12, command=lambda: [mostrar_ids(), remover_matricula_gui()])
+    btn_remover = tk.Button(frame_botoes, text="Remover", width=12, command=remover_matricula_gui)
     btn_remover.grid(row=0, column=2, padx=5)
 
-    btn_buscar = tk.Button(frame_botoes, text="Buscar", width=12, command=lambda: [mostrar_ids(), buscar_matricula_gui()])
+    btn_buscar = tk.Button(frame_botoes, text="Buscar", width=12, command=buscar_matricula_gui)
     btn_buscar.grid(row=1, column=0, padx=5, pady=5)
 
     btn_listar = tk.Button(frame_botoes, text="Listar Todos", width=12, command=mostrar_matriculas)
