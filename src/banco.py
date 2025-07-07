@@ -58,7 +58,7 @@ class BancoDados:
                 conn.commit()
             return True
         except sqlite3.IntegrityError as e:
-            print(f"Erro de integridade: {e}")
+            raise Exception(f"Erro de integridade: {e}")
             return False
 
     def buscar_aluno_por_id(self, id_aluno: int):
@@ -112,7 +112,7 @@ class BancoDados:
                 conn.commit()
             return True
         except sqlite3.IntegrityError as e:
-            print(f"Erro de integridade: {e}")
+            raise Exception(f"Erro de integridade: {e}")
             return False
 
     def buscar_curso_por_id(self, id_curso: int) -> Optional[Tuple]:
@@ -164,7 +164,7 @@ class BancoDados:
                 conn.commit()
             return True
         except sqlite3.IntegrityError as e:
-            print(f"Erro de integridade: {e}")
+            raise Exception(f"Erro de integridade: {e}")
             return False
 
     def atualizar_professor(self, id_prof: int, nome: Optional[str] = None, area_especializacao: Optional[str] = None,
@@ -215,7 +215,7 @@ class BancoDados:
                 conn.commit()
             return True
         except sqlite3.IntegrityError as e:
-            print(f"Erro de integridade: {e}")
+            raise Exception(f"Erro de integridade: {e}")
             return False
 
     def atualizar_disciplina(self, id_disc: int, nome: Optional[str] = None,
@@ -259,15 +259,15 @@ class BancoDados:
                                 (id_aluno, id_disc)).fetchone()
 
     def inserir_matricula(self, id_aluno: int, id_disc: int, semestre: str,
-                          nota: Optional[float] = None) -> bool:
+                          nota: Optional[float] = None, status: Optional[str] = None) -> bool:
         try:
             with self._conectar() as conn:
-                conn.execute("INSERT INTO Matricula (id_aluno, id_disc, semestre, nota) VALUES (?, ?, ?, ?)",
-                             (id_aluno, id_disc, semestre, nota))
+                conn.execute("INSERT INTO Matricula (id_aluno, id_disc, semestre, nota, status) VALUES (?, ?, ?, ?, ?)",
+                             (id_aluno, id_disc, semestre, nota, status))
                 conn.commit()
             return True
         except sqlite3.IntegrityError as e:
-            print(f"Erro de integridade: {e}")
+            raise Exception(f"Erro de integridade: {e}")
             return False
 
     def atualizar_matricula(self, id_aluno: int, id_disc: int,
@@ -316,7 +316,7 @@ class BancoDados:
                 conn.commit()
             return True
         except sqlite3.IntegrityError as e:
-            print(f"Erro de integridade: {e}")
+            raise Exception(f"Erro de integridade: {e}")
             return False
 
     def atualizar_oferta(self, id_oferta: int, id_curso: Optional[int] = None,

@@ -122,7 +122,7 @@ def iniciar_interface_professor():
             mostrar_professores()
             messagebox.showinfo("Sucesso", "Professor removido com sucesso!")
         except Exception as e:
-            messagebox.showerror("Erro", f"Ocorreu um erro: {str(e)}")
+            messagebox.showerror("Erro", "ID deve ser um número inteiro válido.")
 
     def buscar_professor():
         try:

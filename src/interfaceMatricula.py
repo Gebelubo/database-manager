@@ -22,6 +22,7 @@ def iniciar_interface_matricula():
     # Campos de entrada
     entry_semestre = tk.Entry(main_frame)
     entry_nota = tk.Entry(main_frame)
+    entry_status = tk.Entry(main_frame)
 
     # Layout dos campos
     tk.Label(main_frame, text="Semestre").grid(row=2, column=0, sticky="e")  # obrigatório
@@ -31,7 +32,7 @@ def iniciar_interface_matricula():
     entry_nota.grid(row=3, column=1)
 
     tk.Label(main_frame, text="Status (opcional)").grid(row=4, column=0, sticky="e")
-    # Listbox para mostrar matrículas
+    entry_status.grid(row=4, column=1)
     lista = tk.Listbox(janela, width=90, height=15)
     lista.pack(pady=10)
 
@@ -66,8 +67,9 @@ def iniciar_interface_matricula():
                 return
             nota_str = entry_nota.get().strip()
             nota = float(nota_str) if nota_str else None
+            status = entry_status.get().strip() or None  # Pega o status ou None se vazio
 
-            inserir_matricula(id_aluno, id_disc, semestre, nota)
+            inserir_matricula(id_aluno, id_disc, semestre, nota, status)
             mostrar_matriculas()
             messagebox.showinfo("Sucesso", "Matrícula adicionada com sucesso!")
 
@@ -76,6 +78,7 @@ def iniciar_interface_matricula():
             entry_id_disc.delete(0, tk.END)
             entry_semestre.delete(0, tk.END)
             entry_nota.delete(0, tk.END)
+            entry_status.delete(0, tk.END)  # Limpa o campo de status também
         except ValueError:
             messagebox.showerror("Erro", "IDs devem ser números inteiros e nota deve ser número decimal válido.")
         except Exception as e:
@@ -88,12 +91,13 @@ def iniciar_interface_matricula():
             semestre = entry_semestre.get().strip() or None
             nota_str = entry_nota.get().strip()
             nota = float(nota_str) if nota_str else None
+            status = entry_status.get().strip() or None  # Pega o status ou None se vazio
 
-            if semestre is None and nota is None:
-                messagebox.showwarning("Atenção", "Informe ao menos semestre ou nota para atualizar.")
+            if semestre is None and nota is None and status is None:
+                messagebox.showwarning("Atenção", "Informe ao menos semestre, nota ou status para atualizar.")
                 return
 
-            atualizar_matricula(id_aluno, id_disc, semestre=semestre, nota=nota)
+            atualizar_matricula(id_aluno, id_disc, semestre=semestre, nota=nota, status=status)
             mostrar_matriculas()
             messagebox.showinfo("Sucesso", "Matrícula atualizada com sucesso!")
         except ValueError:
