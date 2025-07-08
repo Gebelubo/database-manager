@@ -13,11 +13,9 @@ def iniciar_interface_curso():
     janela.title("Gestão de Cursos")
     janela.geometry("600x450")
 
-    # Frame principal
     main_frame = tk.Frame(janela)
     main_frame.pack(pady=10)
 
-    # Campo de ID (inicialmente oculto)
     entry_id = tk.Entry(main_frame)
     label_id = tk.Label(main_frame, text="ID")
     def mostrar_id():
@@ -27,16 +25,14 @@ def iniciar_interface_curso():
         label_id.grid_remove()
         entry_id.grid_remove()
 
-    # Campos de entrada
     entry_nome = tk.Entry(main_frame)
     entry_descricao = tk.Entry(main_frame)
     entry_carga = tk.Entry(main_frame)
 
-    # Layout dos campos
-    tk.Label(main_frame, text="Nome").grid(row=1, column=0, sticky="e")  # obrigatório
+    tk.Label(main_frame, text="Nome").grid(row=1, column=0, sticky="e")  
     entry_nome.grid(row=1, column=1)
 
-    tk.Label(main_frame, text="Carga Horária").grid(row=3, column=0, sticky="e")  # obrigatório
+    tk.Label(main_frame, text="Carga Horária").grid(row=3, column=0, sticky="e")  
     entry_carga.grid(row=3, column=1)
 
     tk.Label(main_frame, text="Descrição (opcional)").grid(row=2, column=0, sticky="e")
@@ -46,15 +42,12 @@ def iniciar_interface_curso():
     entry_modalidade = tk.Entry(main_frame)
     entry_modalidade.grid(row=4, column=1)
 
-    # Frame dos botões usando grid (corrigido)
     frame_botoes = tk.Frame(main_frame)
     frame_botoes.grid(row=5, column=0, columnspan=2, pady=10)
 
-    # Listbox para mostrar cursos
     lista = tk.Listbox(janela, width=80, height=15)
     lista.pack(pady=10)
 
-    # Funções
     def mostrar_cursos():
         lista.delete(0, tk.END)
         for curso in listar_cursos():
@@ -134,7 +127,6 @@ def iniciar_interface_curso():
         except Exception as e:
             messagebox.showerror("Erro", f"Ocorreu um erro: {str(e)}")
 
-    # Botões de ação
     btn_adicionar = tk.Button(frame_botoes, text="Adicionar", width=12, command=lambda: [ocultar_id(), adicionar_curso()])
     btn_adicionar.grid(row=0, column=0, padx=5)
 
@@ -150,7 +142,6 @@ def iniciar_interface_curso():
     btn_listar = tk.Button(frame_botoes, text="Listar Todos", width=12, command=mostrar_cursos)
     btn_listar.grid(row=1, column=1, padx=5, pady=5)
 
-    # Mostrar cursos ao abrir
     mostrar_cursos()
 
 if __name__ == "__main__":

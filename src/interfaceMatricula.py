@@ -15,17 +15,14 @@ def iniciar_interface_matricula():
     janela.title("Gestão de Matrículas")
     janela.geometry("700x520")
 
-    # Frame principal
     main_frame = tk.Frame(janela)
     main_frame.pack(pady=10)
 
-    # Campos de entrada
     entry_semestre = tk.Entry(main_frame)
     entry_nota = tk.Entry(main_frame)
     entry_status = tk.Entry(main_frame)
 
-    # Layout dos campos
-    tk.Label(main_frame, text="Semestre").grid(row=2, column=0, sticky="e")  # obrigatório
+    tk.Label(main_frame, text="Semestre").grid(row=2, column=0, sticky="e")  
     entry_semestre.grid(row=2, column=1)
 
     tk.Label(main_frame, text="Nota (opcional)").grid(row=3, column=0, sticky="e")
@@ -36,7 +33,6 @@ def iniciar_interface_matricula():
     lista = tk.Listbox(janela, width=90, height=15)
     lista.pack(pady=10)
 
-    # Labels e entries SEMPRE visíveis para ID Aluno e ID Disciplina
     label_id_aluno = tk.Label(main_frame, text="ID Aluno")
     entry_id_aluno = tk.Entry(main_frame)
     label_id_aluno.grid(row=0, column=0, sticky="e")
@@ -47,10 +43,6 @@ def iniciar_interface_matricula():
     label_id_disc.grid(row=1, column=0, sticky="e")
     entry_id_disc.grid(row=1, column=1)
 
-    # Não use ocultar_ids() ou mostrar_ids() para esses campos!
-    # Eles devem estar sempre visíveis para todas as operações.
-
-    # Funções de operação
     def mostrar_matriculas():
         lista.delete(0, tk.END)
         for mat in listar_matriculas():
@@ -67,18 +59,17 @@ def iniciar_interface_matricula():
                 return
             nota_str = entry_nota.get().strip()
             nota = float(nota_str) if nota_str else None
-            status = entry_status.get().strip() or None  # Pega o status ou None se vazio
+            status = entry_status.get().strip() or None  
 
             inserir_matricula(id_aluno, id_disc, semestre, nota, status)
             mostrar_matriculas()
             messagebox.showinfo("Sucesso", "Matrícula adicionada com sucesso!")
 
-            # Limpa os campos após adição
             entry_id_aluno.delete(0, tk.END)
             entry_id_disc.delete(0, tk.END)
             entry_semestre.delete(0, tk.END)
             entry_nota.delete(0, tk.END)
-            entry_status.delete(0, tk.END)  # Limpa o campo de status também
+            entry_status.delete(0, tk.END)  
         except ValueError:
             messagebox.showerror("Erro", "IDs devem ser números inteiros e nota deve ser número decimal válido.")
         except Exception as e:
@@ -91,7 +82,7 @@ def iniciar_interface_matricula():
             semestre = entry_semestre.get().strip() or None
             nota_str = entry_nota.get().strip()
             nota = float(nota_str) if nota_str else None
-            status = entry_status.get().strip() or None  # Pega o status ou None se vazio
+            status = entry_status.get().strip() or None  
 
             if semestre is None and nota is None and status is None:
                 messagebox.showwarning("Atenção", "Informe ao menos semestre, nota ou status para atualizar.")
@@ -146,11 +137,9 @@ def iniciar_interface_matricula():
         except Exception as e:
             messagebox.showerror("Erro", f"Ocorreu um erro: {str(e)}")
 
-    # Frame de botões
     frame_botoes = tk.Frame(janela)
     frame_botoes.pack(pady=10)
 
-    # Botões de ação
     btn_adicionar = tk.Button(frame_botoes, text="Adicionar", width=12, command=adicionar_matricula)
     btn_adicionar.grid(row=0, column=0, padx=5)
 
@@ -166,7 +155,6 @@ def iniciar_interface_matricula():
     btn_listar = tk.Button(frame_botoes, text="Listar Todos", width=12, command=mostrar_matriculas)
     btn_listar.grid(row=1, column=1, padx=5, pady=5)
 
-    # Mostra as matrículas ao iniciar
     mostrar_matriculas()
 
 if __name__ == "__main__":

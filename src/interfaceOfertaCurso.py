@@ -35,16 +35,16 @@ def iniciar_interface_oferta():
     entry_sala = tk.Entry(main_frame)
     entry_turno = tk.Entry(main_frame)
 
-    tk.Label(main_frame, text="ID Curso").grid(row=1, column=0, sticky="e")  # obrigatório
+    tk.Label(main_frame, text="ID Curso").grid(row=1, column=0, sticky="e")  
     entry_id_curso.grid(row=1, column=1)
 
-    tk.Label(main_frame, text="ID Disciplina").grid(row=2, column=0, sticky="e")  # obrigatório
+    tk.Label(main_frame, text="ID Disciplina").grid(row=2, column=0, sticky="e") 
     entry_id_disc.grid(row=2, column=1)
 
-    tk.Label(main_frame, text="ID Professor").grid(row=3, column=0, sticky="e")  # obrigatório
+    tk.Label(main_frame, text="ID Professor").grid(row=3, column=0, sticky="e") 
     entry_id_prof.grid(row=3, column=1)
 
-    tk.Label(main_frame, text="Período (ex: 2023.1)").grid(row=4, column=0, sticky="e")  # obrigatório
+    tk.Label(main_frame, text="Período (ex: 2023.1)").grid(row=4, column=0, sticky="e")  
     entry_periodo.grid(row=4, column=1)
 
     tk.Label(main_frame, text="Sala (opcional)").grid(row=5, column=0, sticky="e")
@@ -60,7 +60,7 @@ def iniciar_interface_oferta():
         lista.delete(0, tk.END)
         for oferta in listar_ofertas():
             lista.insert(tk.END, 
-                f"Oferta: {oferta[0]} | Curso: {oferta[1]} | Disciplina: {oferta[2]} | Professor: {oferta[3]} | Período: {oferta[4]}")
+                f"ID Oferta: {oferta[0]} | Curso: {oferta[1]} | Disciplina: {oferta[2]} | Professor: {oferta[3]} | Período: {oferta[4]}")
 
     def adicionar_oferta():
         id_curso = int(entry_id_curso.get())
@@ -137,7 +137,7 @@ def iniciar_interface_oferta():
             oferta = buscar_oferta_por_id(id_oferta)
             lista.delete(0, tk.END)
             if oferta:
-                lista.insert(tk.END, f"Oferta: {oferta[0]} | Curso: {oferta[1]} | Disciplina: {oferta[2]} | Professor: {oferta[3]} | Período: {oferta[4]}")
+                lista.insert(tk.END, f"ID Oferta: {oferta[0]} | Curso: {oferta[1]} | Disciplina: {oferta[2]} | Professor: {oferta[3]} | Período: {oferta[4]}")
             else:
                 messagebox.showinfo("Resultado", "Oferta não encontrada.")
         except ValueError:

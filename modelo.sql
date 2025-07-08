@@ -1,15 +1,8 @@
--- Sistema de Gerenciamento de Cursos - Esquema do Banco de Dados
--- Versão: 2.2 (sem constraints de formato)
--- Data: 06/07/2025
-
--- Configurações iniciais
 PRAGMA foreign_keys = ON;
 PRAGMA journal_mode = WAL;
 PRAGMA synchronous = NORMAL;
 
--- =====================================
--- REMOÇÃO DE TABELAS EXISTENTES (CASO NECESSÁRIO)
--- =====================================
+
 DROP TABLE IF EXISTS Matricula;
 DROP TABLE IF EXISTS OfertaCurso;
 DROP TABLE IF EXISTS Disciplina;
@@ -19,11 +12,7 @@ DROP TABLE IF EXISTS Aluno;
 DROP TABLE IF EXISTS LogAlunoInsert;
 DROP TABLE IF EXISTS Perfil;
 
--- =====================================
--- CRIAÇÃO DAS TABELAS PRINCIPAIS
--- =====================================
 
--- Tabela de Alunos
 CREATE TABLE Aluno (
     id_aluno INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
@@ -34,7 +23,6 @@ CREATE TABLE Aluno (
     data_nascimento DATE
 );
 
--- Tabela de Cursos
 CREATE TABLE Curso (
     id_curso INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
@@ -43,7 +31,6 @@ CREATE TABLE Curso (
     modalidade TEXT
 );
 
--- Tabela de Professores
 CREATE TABLE Professor (
     id_prof INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
@@ -52,7 +39,6 @@ CREATE TABLE Professor (
     email TEXT
 );
 
--- Tabela de Disciplinas
 CREATE TABLE Disciplina (
     id_disc INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
@@ -63,7 +49,6 @@ CREATE TABLE Disciplina (
     FOREIGN KEY (id_prof) REFERENCES Professor(id_prof) ON DELETE SET NULL
 );
 
--- Tabela de Matrículas
 CREATE TABLE Matricula (
     id_matricula INTEGER PRIMARY KEY AUTOINCREMENT,
     id_aluno INTEGER NOT NULL,
@@ -75,7 +60,6 @@ CREATE TABLE Matricula (
     FOREIGN KEY (id_disc) REFERENCES Disciplina(id_disc) ON DELETE CASCADE
 );
 
--- Tabela de Ofertas de Curso
 CREATE TABLE OfertaCurso (
     id_oferta INTEGER PRIMARY KEY AUTOINCREMENT,
     id_curso INTEGER NOT NULL,
@@ -89,7 +73,6 @@ CREATE TABLE OfertaCurso (
     FOREIGN KEY (id_prof) REFERENCES Professor(id_prof) ON DELETE SET NULL
 );
 
--- Tabela de Perfis
 CREATE TABLE Perfil (
     id_perfil INTEGER PRIMARY KEY AUTOINCREMENT,
     id_prof INTEGER UNIQUE, -- UNIQUE garante 1:1
@@ -98,10 +81,6 @@ CREATE TABLE Perfil (
     FOREIGN KEY (id_prof) REFERENCES Professor(id_prof) ON DELETE CASCADE
 );
 
--- =====================================
--- TABELAS DE LOG E AUDITORIA
--- =====================================
-
 CREATE TABLE LogAlunoInsert (
     id_log INTEGER PRIMARY KEY AUTOINCREMENT,
     id_aluno INTEGER NOT NULL,
@@ -109,10 +88,6 @@ CREATE TABLE LogAlunoInsert (
     data_insercao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     acao TEXT DEFAULT 'INSERT'
 );
-
--- =====================================
--- TRIGGERS
--- =====================================
 
 CREATE TRIGGER trg_log_insert_aluno
 AFTER INSERT ON Aluno
@@ -128,21 +103,18 @@ BEGIN
     VALUES (NEW.id_aluno, NEW.nome, 'UPDATE');
 END;
 
--- =====================================
--- DADOS INICIAIS
--- =====================================
 
 INSERT INTO Aluno (nome, email, telefone, endereco, status, data_nascimento) VALUES 
-('Ana Lima', 'ana@email.com', '85999990000', 'Rua A, 123', 'ativo', '2000-01-01'),
-('Carlos Mendes', 'carlos@email.com', NULL, NULL, 'ativo', '1999-05-15');
+('Alexsandro barreto', 'alexsandro@email.com', '85999990000', 'Rua A, 123', 'ativo', '2000-01-01'),
+('Gabriel Luiz', 'gabriel@email.com', NULL, NULL, 'ativo', '1999-05-15');
 
 INSERT INTO Curso (nome, carga_horaria, descricao, modalidade) VALUES 
 ('Ciência da Computação', 3200, 'Curso voltado para algoritmos e estruturas de dados', 'Presencial'),
 ('Engenharia de Software', 3000, 'Curso focado em desenvolvimento de sistemas', 'EAD');
 
 INSERT INTO Professor (nome, area_especializacao, telefone, email) VALUES 
-('Marcos Silva', 'Banco de Dados', '85988887777', 'marcos@uni.edu'),
-('Juliana Santos', 'Engenharia de Software', '85977776666', 'juliana@uni.edu');
+('Guy Barroso', 'Banco de Dados', '85988887777', 'guy@uece.com'),
+('Andre Da Silva', 'Engenharia de Software', '85977776666', 'andre@uece.com');
 
 INSERT INTO Disciplina (nome, codigo, ementa, bibliografia, id_prof) VALUES 
 ('Banco de Dados I', 'BD101', 'Fundamentos de bancos de dados relacionais', 'Elmasri & Navathe', 1),
@@ -161,18 +133,10 @@ INSERT INTO Perfil (id_prof, bio, linkedin) VALUES
 (1, 'Especialista em Banco de Dados com 10 anos de experiência.', 'https://linkedin.com/in/marcossilva'),
 (2, 'Professora de Engenharia de Software e entusiasta de metodologias ágeis.', 'https://linkedin.com/in/julianasantos');
 
--- =====================================
--- ÍNDICES PARA MELHOR PERFORMANCE
--- =====================================
-
 CREATE INDEX idx_aluno_nome ON Aluno(nome);
 CREATE INDEX idx_disciplina_nome ON Disciplina(nome);
 CREATE INDEX idx_matricula_aluno ON Matricula(id_aluno);
 CREATE INDEX idx_matricula_disciplina ON Matricula(id_disc);
-
--- =====================================
--- CONSULTAS ÚTEIS (EXEMPLOS)
--- =====================================
 
 SELECT id_aluno, nome, email FROM Aluno WHERE status = 'ativo';
 

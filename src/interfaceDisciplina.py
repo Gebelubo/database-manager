@@ -32,10 +32,10 @@ def iniciar_interface_disciplina():
     entry_bibliografia = tk.Entry(main_frame)
     entry_prof_id = tk.Entry(main_frame)
 
-    tk.Label(main_frame, text="Nome").grid(row=1, column=0, sticky="e")  # obrigatório
+    tk.Label(main_frame, text="Nome").grid(row=1, column=0, sticky="e")  
     entry_nome.grid(row=1, column=1)
 
-    tk.Label(main_frame, text="Código").grid(row=2, column=0, sticky="e")  # obrigatório
+    tk.Label(main_frame, text="Código").grid(row=2, column=0, sticky="e")  
     entry_codigo.grid(row=2, column=1)
 
     tk.Label(main_frame, text="Ementa (opcional)").grid(row=3, column=0, sticky="e")
@@ -54,7 +54,7 @@ def iniciar_interface_disciplina():
         lista.delete(0, tk.END)
         for disc in listar_disciplinas():
             prof_id = disc[5] if disc[5] else "N/A"
-            lista.insert(tk.END, f"ID: {disc[0]} --- Nome: {disc[1]} --- Prof ID: {prof_id}")
+            lista.insert(tk.END, f"ID Disciplina: {disc[0]} --- Nome: {disc[1]} --- Prof ID: {prof_id}")
 
     def adicionar_disciplina():
         nome = entry_nome.get().strip()

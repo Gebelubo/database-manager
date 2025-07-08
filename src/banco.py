@@ -41,7 +41,6 @@ class BancoDados:
                     conn.executescript(f.read())
                 conn.commit()
 
-    # --- ALUNO ---
     def listar_alunos(self) -> List[Tuple]:
         with self._conectar() as conn:
             return conn.execute("SELECT * FROM Aluno").fetchall()
@@ -100,7 +99,6 @@ class BancoDados:
         with self._conectar() as conn:
             return conn.execute("SELECT * FROM Aluno WHERE nome LIKE ?", (f"%{substring}%",)).fetchall()
 
-    # --- CURSO ---
     def listar_cursos(self) -> List[Tuple]:
         with self._conectar() as conn:
             return conn.execute("SELECT * FROM Curso").fetchall()
@@ -147,7 +145,6 @@ class BancoDados:
             print(f"Erro ao remover curso: {e}")
             return False
 
-    # --- PROFESSOR ---
     def listar_professores(self) -> List[Tuple]:
         with self._conectar() as conn:
             return conn.execute("SELECT * FROM Professor").fetchall()
@@ -198,7 +195,6 @@ class BancoDados:
             print(f"Erro ao remover professor: {e}")
             return False
 
-    # --- DISCIPLINA ---
     def listar_disciplinas(self) -> List[Tuple]:
         with self._conectar() as conn:
             return conn.execute("SELECT * FROM Disciplina").fetchall()
@@ -248,7 +244,6 @@ class BancoDados:
             print(f"Erro ao remover disciplina: {e}")
             return False
 
-    # --- MATRICULA ---
     def listar_matriculas(self) -> List[Tuple]:
         with self._conectar() as conn:
             return conn.execute("SELECT * FROM Matricula").fetchall()
@@ -299,7 +294,6 @@ class BancoDados:
             print(f"Erro ao remover matrícula: {e}")
             return False
 
-    # --- OFERTA CURSO ---
     def listar_ofertas(self) -> List[Tuple]:
         with self._conectar() as conn:
             return conn.execute("SELECT * FROM OfertaCurso").fetchall()
@@ -351,7 +345,6 @@ class BancoDados:
             print(f"Erro ao remover oferta: {e}")
             return False
 
-    # --- PERFIL ---
     def inserir_perfil(self, id_prof, bio=None, linkedin=None):
         try:
             with self._conectar() as conn:
@@ -394,7 +387,6 @@ class BancoDados:
             print(f"Erro ao remover perfil: {e}")
             return False
 
-# Singleton Access
 _banco_instance = None
 
 def get_banco():
@@ -403,7 +395,6 @@ def get_banco():
         _banco_instance = BancoDados()
     return _banco_instance
 
-# Funções utilitárias
 listar_alunos = lambda: get_banco().listar_alunos()
 inserir_aluno = lambda *args, **kwargs: get_banco().inserir_aluno(*args, **kwargs)
 buscar_aluno_por_id = lambda *args, **kwargs: get_banco().buscar_aluno_por_id(*args, **kwargs)

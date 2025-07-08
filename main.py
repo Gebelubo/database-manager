@@ -14,7 +14,6 @@ try:
     from interfaceOfertaCurso import iniciar_interface_oferta
     from interfacePerfil import iniciar_interface as iniciar_interface_perfil
 except ImportError as e:
-    # Mensagem de erro amigável se algum módulo não for encontrado
     tk.Tk().withdraw()
     messagebox.showerror("Erro de Importação", f"Erro ao importar módulos:\n{e}")
     sys.exit(1)
@@ -33,7 +32,6 @@ class SistemaGestaoCursos:
         self.root.resizable(False, False)
         self.center_window()
 
-        # Menu superior
         menubar = tk.Menu(self.root)
         self.root.config(menu=menubar)
 
@@ -47,11 +45,9 @@ class SistemaGestaoCursos:
         modulos_menu.add_command(label="Matrículas", command=iniciar_interface_matricula)
         modulos_menu.add_command(label="Ofertas de Curso", command=iniciar_interface_oferta)
 
-        # Frame principal
         main_frame = tk.Frame(self.root, padx=20, pady=20)
         main_frame.pack(fill=tk.BOTH, expand=True)
 
-        # Botões com cores
         modules = self.get_modules()
         for text, command, color in modules:
             btn = tk.Button(
@@ -68,7 +64,6 @@ class SistemaGestaoCursos:
             )
             btn.pack(fill=tk.X, pady=5, ipady=8)
 
-        # Botão sair
         btn_sair = tk.Button(
             main_frame,
             text="Sair do Sistema",
@@ -83,7 +78,6 @@ class SistemaGestaoCursos:
         )
         btn_sair.pack(fill=tk.X, pady=(20, 0), ipady=8)
 
-        # Evento de fechamento da janela
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
     def center_window(self):

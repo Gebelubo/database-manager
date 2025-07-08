@@ -18,7 +18,6 @@ def iniciar_interface():
     main_frame = tk.Frame(janela)
     main_frame.pack(pady=10)
 
-    # Campo de ID (inicialmente oculto)
     entry_id = tk.Entry(main_frame)
     label_id = tk.Label(main_frame, text="ID")
     def mostrar_id():
@@ -28,12 +27,11 @@ def iniciar_interface():
         label_id.grid_remove()
         entry_id.grid_remove()
 
-    # Campos de entrada restantes (ajuste as linhas conforme o ID)
-    tk.Label(main_frame, text="Nome").grid(row=1, column=0, sticky="e")  # obrigatório
+    tk.Label(main_frame, text="Nome").grid(row=1, column=0, sticky="e")  
     entry_nome = tk.Entry(main_frame)
     entry_nome.grid(row=1, column=1)
 
-    tk.Label(main_frame, text="Email").grid(row=2, column=0, sticky="e")  # obrigatório
+    tk.Label(main_frame, text="Email").grid(row=2, column=0, sticky="e")  
     entry_email = tk.Entry(main_frame)
     entry_email.grid(row=2, column=1)
 
@@ -53,11 +51,9 @@ def iniciar_interface():
     entry_status = tk.Entry(main_frame)
     entry_status.grid(row=6, column=1)
 
-    # Listbox
     lista = tk.Listbox(janela, width=80, height=15)
     lista.pack(pady=10)
 
-    # Funções
     def mostrar_alunos():
         lista.delete(0, tk.END)
         for aluno in listar_alunos():
@@ -168,20 +164,16 @@ def iniciar_interface():
         except Exception as e:
             messagebox.showerror("Erro", f"Ocorreu um erro: {str(e)}")
 
-    # Frame dos botões
     frame_botoes = tk.Frame(janela)
     frame_botoes.pack(pady=10)
 
-    # Botões
     tk.Button(frame_botoes, text="Adicionar", width=12, command=lambda: [ocultar_id(), adicionar_aluno()]).grid(row=0, column=0, padx=5)
     tk.Button(frame_botoes, text="Atualizar", width=12, command=lambda: [mostrar_id(), atualizar_aluno_gui()]).grid(row=0, column=1, padx=5)
     tk.Button(frame_botoes, text="Remover", width=12, command=lambda: [mostrar_id(), remover_aluno_gui()]).grid(row=0, column=2, padx=5)
     tk.Button(frame_botoes, text="Buscar por ID", width=12, command=lambda: [mostrar_id(), buscar_aluno()]).grid(row=1, column=0, padx=5, pady=5)
     tk.Button(frame_botoes, text="Buscar por Nome", width=12, command=buscar_por_substring).grid(row=1, column=1, padx=5, pady=5)
 
-    # Ao iniciar, oculte o campo ID
     ocultar_id()
-    # Mostrar alunos ao iniciar
     mostrar_alunos()
     janela.mainloop()
 
