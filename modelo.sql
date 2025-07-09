@@ -110,6 +110,10 @@ INSERT INTO Perfil (id_prof, bio, linkedin) VALUES
 (1, 'Especialista em Banco de Dados com 10 anos de experiência.', 'https://linkedin.com/in/marcossilva'),
 (2, 'Professora de Engenharia de Software e entusiasta de metodologias ágeis.', 'https://linkedin.com/in/julianasantos');
 
+
+/*
+---CODIGOS EXTRAS DE MANIPULAÇÂO DO BANCO
+
 CREATE INDEX idx_aluno_nome ON Aluno(nome);
 CREATE INDEX idx_disciplina_nome ON Disciplina(nome);
 CREATE INDEX idx_matricula_aluno ON Matricula(id_aluno);
@@ -132,3 +136,30 @@ JOIN Matricula m ON a.id_aluno = m.id_aluno
 GROUP BY a.id_aluno
 HAVING media_geral >= 8.0
 ORDER BY media_geral DESC;
+
+-- Excluir matrícula específica
+DELETE FROM Matricula WHERE id_aluno = 2 AND id_disc = 1;
+
+-- Atualizar telefone de aluno
+UPDATE Aluno SET telefone = '85999998888' WHERE id_aluno = 1;
+
+-- Busca por alunos cujo nome contém 'luiz' (sem considerar maiúsculas/minúsculas)
+SELECT * FROM Aluno
+WHERE LOWER(nome) LIKE LOWER('%luiz%');
+
+-- Alunos cuja todas as notas são maiores ou iguais a 7
+SELECT nome FROM Aluno
+WHERE 7 <= ALL (
+    SELECT nota FROM Matricula WHERE Matricula.id_aluno = Aluno.id_aluno
+    AND nota IS NOT NULL
+);
+
+-- Disciplinas onde qualquer aluno teve nota abaixo de 6
+SELECT nome FROM Disciplina
+WHERE id_disc = ANY (
+    SELECT id_disc FROM Matricula WHERE nota < 6
+);
+-- Alunos ordenados por nome (exemplo ascendente)
+SELECT * FROM Aluno ORDER BY nome ASC;
+
+*/
