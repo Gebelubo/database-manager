@@ -9,7 +9,6 @@ DROP TABLE IF EXISTS Disciplina;
 DROP TABLE IF EXISTS Professor;
 DROP TABLE IF EXISTS Curso;
 DROP TABLE IF EXISTS Aluno;
-DROP TABLE IF EXISTS LogAlunoInsert;
 DROP TABLE IF EXISTS Perfil;
 
 
@@ -80,28 +79,6 @@ CREATE TABLE Perfil (
     linkedin TEXT,
     FOREIGN KEY (id_prof) REFERENCES Professor(id_prof) ON DELETE CASCADE
 );
-
-CREATE TABLE LogAlunoInsert (
-    id_log INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_aluno INTEGER NOT NULL,
-    nome TEXT NOT NULL,
-    data_insercao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    acao TEXT DEFAULT 'INSERT'
-);
-
-CREATE TRIGGER trg_log_insert_aluno
-AFTER INSERT ON Aluno
-BEGIN
-    INSERT INTO LogAlunoInsert (id_aluno, nome) 
-    VALUES (NEW.id_aluno, NEW.nome);
-END;
-
-CREATE TRIGGER trg_log_update_aluno
-AFTER UPDATE ON Aluno
-BEGIN
-    INSERT INTO LogAlunoInsert (id_aluno, nome, acao) 
-    VALUES (NEW.id_aluno, NEW.nome, 'UPDATE');
-END;
 
 
 INSERT INTO Aluno (nome, email, telefone, endereco, status, data_nascimento) VALUES 
